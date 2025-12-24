@@ -7,7 +7,7 @@ export const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'login',
     pathMatch: 'full',
   },
   {
@@ -19,7 +19,11 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/add-product/add-product.page').then( m => m.AddProductPage)
   },
   {
-    path: 'product-details',
+    path: 'product-details/:id', // <--- DODATO /:id
     loadComponent: () => import('./pages/product-details/product-details.page').then( m => m.ProductDetailsPage)
+  },
+  {
+    path: 'register',
+    loadComponent: () => import('./pages/register/register.page').then( m => m.RegisterPage)
   },
 ];
