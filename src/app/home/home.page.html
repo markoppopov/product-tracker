@@ -1,18 +1,42 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-title>Praćenje Proizvoda</ion-title>
+    <ion-title>Moji Proizvodi</ion-title>
+    
     <ion-buttons slot="end">
-      </ion-buttons>
+      <ion-button (click)="logout()">
+        <ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <ion-list>
-    <ion-item *ngFor="let p of products" button (click)="goToDetails(p)">
-      <ion-label>
-        <h2>{{ p.name }}</h2>
-        <p>Poreklo: {{ p.origin }}</p>
+<ion-content class="ion-padding-vertical"> <div *ngIf="products.length === 0" class="ion-text-center ion-padding" style="margin-top: 50px;">
+    <ion-icon name="cube-outline" style="font-size: 64px; color: #e0e0e0;"></ion-icon>
+    <h3 style="color: #666;">Nema proizvoda</h3>
+    <p class="ion-text-muted">Kliknite na + da dodate svoj prvi proizvod.</p>
+  </div>
+
+  <ion-list *ngIf="products.length > 0">
+    <ion-item *ngFor="let p of products" button (click)="goToDetails(p)" detail="false">
+      
+      <ion-label class="ion-text-wrap"> <h2 style="font-weight: bold; font-size: 1.2rem; margin-bottom: 5px;">
+          {{ p.name }}
+        </h2>
+        <p style="display: flex; align-items: center; gap: 4px; color: #666;">
+          <ion-icon name="location-outline"></ion-icon> 
+          {{ p.origin }}
+        </p>
+        <p style="font-size: 0.8rem; color: #999;">
+          {{ p.manufacturer }}
+        </p>
       </ion-label>
+
+      <div slot="end" class="ion-text-right">
+        <h3 style="font-weight: 900; color: var(--ion-color-primary); font-size: 1.1rem; margin: 0;">
+          {{ p.price }} RSD
+        </h3>
+      </div>
+
     </ion-item>
   </ion-list>
 

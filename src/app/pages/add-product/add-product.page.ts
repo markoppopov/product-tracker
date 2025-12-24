@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { IonicModule, ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { DataService } from 'src/app/services/data.service';
+import { AuthService } from 'src/app/services/auth.service'; // Import Auth servisa
 
 @Component({
   selector: 'app-add-product',
@@ -18,12 +19,12 @@ export class AddProductPage implements OnInit {
   constructor(
     private fb: FormBuilder,
     private dataService: DataService,
+    private authService: AuthService, // Injektujemo Auth servis
     private router: Router,
     private toastController: ToastController
   ) { }
 
   ngOnInit() {
-    // Kreiramo formu koja odgovara poljima u bazi
     this.productForm = this.fb.group({
       name: ['', Validators.required],
       origin: ['', Validators.required],
@@ -33,21 +34,30 @@ export class AddProductPage implements OnInit {
   }
 
   async saveProduct() {
-    // Uzimamo podatke iz forme
-    const productData = this.productForm.value;
+    const formValues = this.productForm.value;
     
-    // Pozivamo servis da upiše podatke u Firebase
-    await this.dataService.addProduct(productData);
-    
-    // Obaveštavamo korisnika da je uspelo
-    const toast = await this.toastController.create({
-      message: 'Proizvod je uspešno dodat!',
-      duration: 2000,
-      color: 'success'
-    });
-    await toast.present();
+    // Dohvatamo trenutnog korisnika
+    const user = this.authService.getAuth().currentUser;
 
-    // Vraćamo se na početnu stranu
-    this.router.navigateByUrl('/home');
+    if (user) {
+      // Pravimo objekat sa userId-jem
+      const productData = {
+        ...formValues,
+        userId: user.uid
+      };
+      
+      await this.dataService.addProduct(productData);
+      
+      const toast = await this.toastController.create({
+        message: 'Proizvod je uspešno dodat!',
+        duration: 2000,
+        color: 'success'
+      });
+      await toast.present();
+
+      this.router.navigateByUrl('/home');
+    } else {
+      console.error("Greška: Korisnik nije ulogovan!");
+    }
   }
 }

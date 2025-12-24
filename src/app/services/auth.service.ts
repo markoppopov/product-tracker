@@ -29,8 +29,13 @@ export class AuthService {
     return signOut(this.auth);
   }
 
-  // Provera da li je korisnik ulogovan (korisno za kasnije)
+  // Provera statusa
   getAuthState() {
     return authState(this.auth);
+  }
+
+  // NOVO: Metoda koja vraća auth objekat (da bismo dohvatili currentUser-a)
+  getAuth() {
+    return this.auth;
   }
 }
