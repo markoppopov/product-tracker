@@ -1,12 +1,27 @@
 import { Component } from '@angular/core';
-import { IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/angular/standalone';
+import { DataService, Product } from '../services/data.service';
+import { CommonModule } from '@angular/common'; // Važno za *ngFor
+import { IonicModule } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
-  imports: [IonHeader, IonToolbar, IonTitle, IonContent],
+  standalone: true,
+  imports: [IonicModule, CommonModule],
 })
 export class HomePage {
-  constructor() {}
+  products: Product[] = [];
+
+  constructor(private dataService: DataService, private router: Router) {
+    this.dataService.getProducts().subscribe(res => {
+      this.products = res;
+    });
+  }
+
+  goToDetails(product: Product) {
+    // Ovde bi implementirao navigaciju ka detaljima
+    console.log("Kliknuto na", product);
+  }
 }
