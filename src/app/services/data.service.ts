@@ -21,6 +21,7 @@ export interface Product {
   origin: string;
   manufacturer: string;
   price: number;
+  note? : string;
 }
 
 export interface UserProfile {

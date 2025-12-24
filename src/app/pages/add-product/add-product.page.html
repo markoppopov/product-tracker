@@ -30,6 +30,11 @@
       <ion-input type="number" formControlName="price"></ion-input>
     </ion-item>
 
+    <ion-item fill="outline" class="ion-margin-bottom">
+      <ion-label position="floating">Napomena (opciono)</ion-label>
+      <ion-textarea formControlName="note" placeholder="Rok trajanja, sastav, itd..." rows="3"></ion-textarea>
+    </ion-item>
+
     <ion-button expand="block" (click)="saveProduct()" [disabled]="!productForm.valid">
       Sačuvaj proizvod
     </ion-button>

@@ -5,7 +5,8 @@ import { IonicModule, ToastController, AlertController } from '@ionic/angular';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DataService, Product } from 'src/app/services/data.service';
 import { addIcons } from 'ionicons';
-import { trash } from 'ionicons/icons'; // Ikonica za brisanje
+// DODALI SMO 'cashOutline' u listu:
+import { trash, informationCircleOutline, cubeOutline, locationOutline, businessOutline, cashOutline } from 'ionicons/icons'; 
 
 @Component({
   selector: 'app-product-details',
@@ -15,7 +16,7 @@ import { trash } from 'ionicons/icons'; // Ikonica za brisanje
   imports: [IonicModule, CommonModule, FormsModule]
 })
 export class ProductDetailsPage implements OnInit {
-  product: Product | null = null; // Ovde čuvamo učitani proizvod
+  product: Product | null = null;
 
   constructor(
     private route: ActivatedRoute,
@@ -24,14 +25,13 @@ export class ProductDetailsPage implements OnInit {
     private toastController: ToastController,
     private alertController: AlertController
   ) {
-    addIcons({ trash });
+    // REGISTRACIJA: Ne zaboravi da je dodaš i ovde!
+    addIcons({ trash, informationCircleOutline, cubeOutline, locationOutline, businessOutline, cashOutline });
   }
 
   ngOnInit() {
-    // 1. Uzimamo ID iz URL-a
     const id = this.route.snapshot.paramMap.get('id');
     
-    // 2. Ako ID postoji, tražimo podatke iz baze
     if (id) {
       this.dataService.getProductById(id).subscribe(res => {
         this.product = res;
@@ -39,11 +39,9 @@ export class ProductDetailsPage implements OnInit {
     }
   }
 
-  // Funkcija za brisanje proizvoda
   async deleteProduct() {
     if (!this.product) return;
 
-    // Pitamo korisnika da li je siguran (Alert)
     const alert = await this.alertController.create({
       header: 'Brisanje',
       message: 'Da li ste sigurni da želite da obrišete ovaj proizvod?',
@@ -56,18 +54,14 @@ export class ProductDetailsPage implements OnInit {
           text: 'Obriši',
           role: 'destructive',
           handler: async () => {
-            // Ako potvrdi, brišemo iz baze
             await this.dataService.deleteProduct(this.product!);
             
-            // Prikazujemo poruku
             const toast = await this.toastController.create({
               message: 'Proizvod obrisan.',
               duration: 2000,
               color: 'danger'
             });
             await toast.present();
-
-            // Vraćamo se na početnu
             this.router.navigateByUrl('/home');
           }
         }

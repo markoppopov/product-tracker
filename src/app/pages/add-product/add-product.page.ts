@@ -29,7 +29,8 @@ export class AddProductPage implements OnInit {
       name: ['', Validators.required],
       origin: ['', Validators.required],
       manufacturer: ['', Validators.required],
-      price: ['', [Validators.required, Validators.min(0)]]
+      price: ['', [Validators.required, Validators.min(0)]],
+      note: ['']
     });
   }
 
