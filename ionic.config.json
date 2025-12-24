@@ -1,0 +1,7 @@
+{
+  "name": "product-tracker",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
