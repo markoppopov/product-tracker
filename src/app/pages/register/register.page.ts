@@ -35,7 +35,6 @@ export class RegisterPage implements OnInit {
   }
 
   async register() {
-    // Ako forma nije validna, prekidamo i obaveštavamo korisnika (ili pustimo HTML da prikaže greške)
     if (this.registerForm.invalid) {
       this.showToast('Molimo popunite sva polja ispravno.');
       return;
@@ -47,11 +46,11 @@ export class RegisterPage implements OnInit {
     await loading.present();
 
     try {
-      // 1. Kreiramo nalog u Firebase Authentication
+      // kreiramo nalog u Firebase Authentication
       const userCredential = await this.authService.register(email, password);
       const user = userCredential.user;
 
-      // 2. Čuvamo dodatne podatke u Firestore bazi
+      // cuvamo dodatne podatke u Firestore bazi
       await this.dataService.addUserProfile({
         id: user.uid, // Povezujemo sa Auth ID-jem
         firstName,
@@ -62,7 +61,7 @@ export class RegisterPage implements OnInit {
       await loading.dismiss();
       this.showToast('Uspešna registracija! Molimo prijavite se.');
       
-      // 3. Vraćamo na Login stranu
+      // vraćamo na Login stranu
       this.router.navigateByUrl('/login');
 
     } catch (e) {

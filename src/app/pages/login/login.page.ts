@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { IonicModule, ToastController } from '@ionic/angular'; // Koristimo Toast umesto Alert-a, lepše je
+import { IonicModule, ToastController } from '@ionic/angular'; // Koristimo Toast umesto Alert-a, lepse je
 import { Router, RouterLink } from '@angular/router'; // Dodat RouterLink
 import { AuthService } from 'src/app/services/auth.service';
 
@@ -30,7 +30,7 @@ export class LoginPage implements OnInit {
   }
 
   async login() {
-    // Ako forma nije validna, obaveštavamo korisnika ZAŠTO nije validna
+    // Ako forma nije validna, obavestavamo korisnika zasto nije validna
     if (this.credentialsForm.invalid) {
       this.showToast('Unesite ispravan email i lozinku.');
       return; 

@@ -19,7 +19,7 @@ export class AuthService {
     return createUserWithEmailAndPassword(this.auth, email, password);
   }
 
-  // Prijava postojećeg korisnika
+  // Prijava postojeceg korisnika
   login(email: string, password: string) {
     return signInWithEmailAndPassword(this.auth, email, password);
   }
@@ -34,7 +34,7 @@ export class AuthService {
     return authState(this.auth);
   }
 
-  // NOVO: Metoda koja vraća auth objekat (da bismo dohvatili currentUser-a)
+  // metoda koja vraća auth objekat (da bismo dohvatili currentUser-a)
   getAuth() {
     return this.auth;
   }

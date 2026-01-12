@@ -28,7 +28,6 @@ export class HomePage implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    // OVDE JE PROMENA: Ne pitamo jednom, nego "slušamo" authState
     this.authSubscription = this.authService.getAuthState().subscribe(user => {
       if (user) {
         console.log("Korisnik prepoznat:", user.uid); // Provera u konzoli
@@ -46,7 +45,6 @@ export class HomePage implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    // Dobra praksa: Prekidamo slušanje kad se strana ugasi da ne gušimo memoriju
     if (this.authSubscription) {
       this.authSubscription.unsubscribe();
     }

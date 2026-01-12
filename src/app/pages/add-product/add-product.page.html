@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/home"></ion-back-button>
     </ion-buttons>
-    <ion-title>Novi Proizvod</ion-title>
+    <ion-title>{{ isEditMode ? 'Izmena Proizvoda' : 'Novi Proizvod' }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -32,11 +32,11 @@
 
     <ion-item fill="outline" class="ion-margin-bottom">
       <ion-label position="floating">Napomena (opciono)</ion-label>
-      <ion-textarea formControlName="note" placeholder="Rok trajanja, sastav, itd..." rows="3"></ion-textarea>
+      <ion-textarea formControlName="note" rows="3"></ion-textarea>
     </ion-item>
 
     <ion-button expand="block" (click)="saveProduct()" [disabled]="!productForm.valid">
-      Sačuvaj proizvod
+      {{ isEditMode ? 'Sačuvaj izmene' : 'Sačuvaj proizvod' }}
     </ion-button>
 
   </form>

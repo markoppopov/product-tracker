@@ -4,7 +4,12 @@
       <ion-back-button defaultHref="/home"></ion-back-button>
     </ion-buttons>
     <ion-title>Detalji Proizvoda</ion-title>
+    
     <ion-buttons slot="end">
+      <ion-button color="light" (click)="editProduct()">
+        <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+      </ion-button>
+
       <ion-button color="light" (click)="deleteProduct()">
         <ion-icon slot="icon-only" name="trash"></ion-icon>
       </ion-button>

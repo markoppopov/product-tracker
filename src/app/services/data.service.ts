@@ -16,7 +16,7 @@ import { Observable } from 'rxjs';
 
 export interface Product {
   id?: string;
-  userId: string; // NOVO: ID korisnika koji je vlasnik proizvoda
+  userId: string; 
   name: string;
   origin: string;
   manufacturer: string;
@@ -41,7 +41,7 @@ export class DataService {
   // 1. READ (Samo proizvodi ulogovanog korisnika)
   getProducts(userId: string): Observable<Product[]> {
     const productsRef = collection(this.firestore, 'products');
-    // Filtriramo: Daj mi proizvode GDE JE userId == trenutni userId
+    // Daj mi proizvode GDE JE userId == trenutni userId
     const q = query(productsRef, where('userId', '==', userId));
     return collectionData(q, { idField: 'id' }) as Observable<Product[]>;
   }
@@ -71,11 +71,12 @@ export class DataService {
       name: product.name, 
       origin: product.origin, 
       manufacturer: product.manufacturer,
-      price: product.price 
+      price: product.price, 
+      note: product.note || ''
     });
   }
 
-  // Korisnički profil
+  // Korisnicki profil
   addUserProfile(user: UserProfile) {
     const userDocRef = doc(this.firestore, `users/${user.id}`);
     return setDoc(userDocRef, user);
