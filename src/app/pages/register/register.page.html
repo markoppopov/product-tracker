@@ -37,8 +37,8 @@
     <ion-item fill="outline" class="ion-margin-bottom">
       <ion-label position="floating">Lozinka</ion-label>
       <ion-input type="password" formControlName="password"></ion-input>
-      <ion-note slot="error" *ngIf="registerForm.get('password')?.hasError('minlength') && registerForm.get('password')?.touched">
-        Šifra mora imati najmanje 6 karaktera.
+      <ion-note color="medium" style="font-size: 0.8rem; padding-left: 5px; display: block; margin-top: -10px; margin-bottom: 20px;">
+        *Lozinka mora imati bar 6 karaktera
       </ion-note>
     </ion-item>
 

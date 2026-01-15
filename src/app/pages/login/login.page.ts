@@ -39,7 +39,7 @@ export class LoginPage implements OnInit {
     const user = this.credentialsForm.value;
     try {
       await this.authService.login(user.email, user.password);
-      // Uspešno logovanje
+      // Uspesno logovanje
       this.router.navigateByUrl('/home', { replaceUrl: true });
     } catch (e) {
       this.showToast('Neuspešno logovanje. Proverite podatke.');

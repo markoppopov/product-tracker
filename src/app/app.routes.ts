@@ -19,7 +19,7 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/add-product/add-product.page').then( m => m.AddProductPage)
   },
   {
-    path: 'product-details/:id', // <--- DODATO /:id
+    path: 'product-details/:id', 
     loadComponent: () => import('./pages/product-details/product-details.page').then( m => m.ProductDetailsPage)
   },
   { path: 'edit-product/:id',

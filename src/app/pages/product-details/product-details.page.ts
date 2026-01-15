@@ -5,7 +5,16 @@ import { IonicModule, ToastController, AlertController } from '@ionic/angular';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DataService, Product } from 'src/app/services/data.service';
 import { addIcons } from 'ionicons';
-import { trash, informationCircleOutline, cubeOutline, locationOutline, businessOutline, cashOutline, createOutline } from 'ionicons/icons'; 
+import { 
+  trash, 
+  informationCircleOutline, 
+  cubeOutline, 
+  locationOutline, 
+  businessOutline, 
+  cashOutline, 
+  createOutline,
+  pricetagOutline 
+} from 'ionicons/icons'; 
 
 @Component({
   selector: 'app-product-details',
@@ -24,7 +33,17 @@ export class ProductDetailsPage implements OnInit {
     private toastController: ToastController,
     private alertController: AlertController
   ) {
-    addIcons({ trash, informationCircleOutline, cubeOutline, locationOutline, businessOutline, cashOutline, createOutline });
+    // REGISTRACIJA SVIH IKONICA
+    addIcons({ 
+      trash, 
+      informationCircleOutline, 
+      cubeOutline, 
+      locationOutline, 
+      businessOutline, 
+      cashOutline, 
+      createOutline, 
+      pricetagOutline 
+    });
   }
 
   ngOnInit() {
@@ -37,10 +56,8 @@ export class ProductDetailsPage implements OnInit {
     }
   }
 
-  // FUNKCIJA ZA IZMENU
   editProduct() {
     if (this.product && this.product.id) {
-      // Vodimo korisnika na istu stranicu kao za dodavanje, ali sa ID-jem
       this.router.navigateByUrl(`/edit-product/${this.product.id}`);
     }
   }

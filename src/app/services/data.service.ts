@@ -22,6 +22,7 @@ export interface Product {
   manufacturer: string;
   price: number;
   note? : string;
+  category: string;
 }
 
 export interface UserProfile {
@@ -41,7 +42,7 @@ export class DataService {
   // 1. READ (Samo proizvodi ulogovanog korisnika)
   getProducts(userId: string): Observable<Product[]> {
     const productsRef = collection(this.firestore, 'products');
-    // Daj mi proizvode GDE JE userId == trenutni userId
+    // Daj mi proizvode gde je userId == trenutni userId
     const q = query(productsRef, where('userId', '==', userId));
     return collectionData(q, { idField: 'id' }) as Observable<Product[]>;
   }
@@ -72,7 +73,8 @@ export class DataService {
       origin: product.origin, 
       manufacturer: product.manufacturer,
       price: product.price, 
-      note: product.note || ''
+      note: product.note || '',
+      category: product.category
     });
   }
 

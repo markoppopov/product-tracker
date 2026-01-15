@@ -61,7 +61,7 @@ export class RegisterPage implements OnInit {
       await loading.dismiss();
       this.showToast('Uspešna registracija! Molimo prijavite se.');
       
-      // vraćamo na Login stranu
+      // vracamo na login stranu
       this.router.navigateByUrl('/login');
 
     } catch (e) {

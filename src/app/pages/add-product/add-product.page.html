@@ -4,6 +4,11 @@
       <ion-back-button defaultHref="/home"></ion-back-button>
     </ion-buttons>
     <ion-title>{{ isEditMode ? 'Izmena Proizvoda' : 'Novi Proizvod' }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="logout()">
+        <ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -11,27 +16,39 @@
   <form [formGroup]="productForm">
     
     <ion-item fill="outline" class="ion-margin-bottom">
-      <ion-label position="floating">Naziv proizvoda</ion-label>
+      <ion-label position="floating">Naziv proizvoda:</ion-label>
       <ion-input type="text" formControlName="name"></ion-input>
     </ion-item>
 
     <ion-item fill="outline" class="ion-margin-bottom">
-      <ion-label position="floating">Zemlja porekla</ion-label>
+      <ion-label position="floating">Kategorija</ion-label>
+      <ion-select formControlName="category" interface="popover">
+        <ion-select-option value="Hrana">Hrana</ion-select-option>
+        <ion-select-option value="Tehnika">Tehnika (Kućni uređaji)</ion-select-option>
+        <ion-select-option value="Kozmetika">Kozmetika</ion-select-option>
+        <ion-select-option value="Odeća">Odeća i Obuća</ion-select-option>
+        <ion-select-option value="Nameštaj">Nameštaj</ion-select-option>
+        <ion-select-option value="Ostalo">Ostalo</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item fill="outline" class="ion-margin-bottom">
+      <ion-label position="floating">Zemlja porekla:</ion-label>
       <ion-input type="text" formControlName="origin"></ion-input>
     </ion-item>
 
     <ion-item fill="outline" class="ion-margin-bottom">
-      <ion-label position="floating">Proizvođač</ion-label>
+      <ion-label position="floating">Proizvođač:</ion-label>
       <ion-input type="text" formControlName="manufacturer"></ion-input>
     </ion-item>
 
     <ion-item fill="outline" class="ion-margin-bottom">
-      <ion-label position="floating">Cena (RSD)</ion-label>
+      <ion-label position="floating">Cena (RSD):</ion-label>
       <ion-input type="number" formControlName="price"></ion-input>
     </ion-item>
 
     <ion-item fill="outline" class="ion-margin-bottom">
-      <ion-label position="floating">Napomena (opciono)</ion-label>
+      <ion-label position="floating">Napomena (opciono):</ion-label>
       <ion-textarea formControlName="note" rows="3"></ion-textarea>
     </ion-item>
 

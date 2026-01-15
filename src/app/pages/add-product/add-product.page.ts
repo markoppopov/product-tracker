@@ -5,6 +5,8 @@ import { IonicModule, ToastController } from '@ionic/angular';
 import { Router, ActivatedRoute } from '@angular/router'; 
 import { DataService, Product } from 'src/app/services/data.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { addIcons } from 'ionicons';
+import { logOutOutline } from 'ionicons/icons';
 
 @Component({
   selector: 'app-add-product',
@@ -23,35 +25,35 @@ export class AddProductPage implements OnInit {
     private dataService: DataService,
     private authService: AuthService,
     private router: Router,
-    private route: ActivatedRoute, // Za čitanje ID-ja iz URL-a
+    private route: ActivatedRoute,
     private toastController: ToastController
-  ) { }
+  ) { 
+    addIcons({ logOutOutline });
+  }
 
   ngOnInit() {
-    // Pravimo praznu formu
     this.productForm = this.fb.group({
       name: ['', Validators.required],
+      category: ['', Validators.required],
       origin: ['', Validators.required],
       manufacturer: ['', Validators.required],
       price: ['', [Validators.required, Validators.min(0)]],
       note: ['']
     });
 
-    // Proveravamo da li smo dosli da menjamo postojeci proizvod
     const id = this.route.snapshot.paramMap.get('id');
-    
     if (id) {
       this.isEditMode = true;
       this.productId = id;
-      // Ako je edit mode, učitaj podatke iz baze u formu
       this.dataService.getProductById(id).subscribe(product => {
         if (product) {
           this.productForm.patchValue({
             name: product.name,
+            category: product.category,
             origin: product.origin,
             manufacturer: product.manufacturer,
             price: product.price,
-            note: product.note
+            note: product.note,
           });
         }
       });
@@ -63,26 +65,40 @@ export class AddProductPage implements OnInit {
     const user = this.authService.getAuth().currentUser;
 
     if (user) {
-      const productData: Product = {
-        ...formValues,
-        userId: user.uid,
-        id: this.productId ? this.productId : undefined // Čuvamo stari ID ako je izmena
+      const baseProductData = {
+        name: formValues.name,
+        category: formValues.category,
+        origin: formValues.origin,
+        manufacturer: formValues.manufacturer,
+        price: formValues.price,
+        note: formValues.note || '', // da nije undefined
+        userId: user.uid
       };
       
       try {
-        if (this.isEditMode) {
-          // AŽURIRANJE
-          await this.dataService.updateProduct(productData);
+        if (this.isEditMode && this.productId) {
+          // AZURIRANJE: Ovde dodajemo ID zbog updateDoc
+          const productToUpdate: Product = { 
+            ...baseProductData, 
+            id: this.productId 
+          };
+          
+          await this.dataService.updateProduct(productToUpdate);
           await this.showToast('Uspešna izmena!');
         } else {
-          // NOVI UNOS
-          await this.dataService.addProduct(productData);
+          // addDoc će sam generisati ID
+          await this.dataService.addProduct(baseProductData as Product);
           await this.showToast('Proizvod dodat!');
         }
-        this.router.navigateByUrl('/home'); // Vrati na početnu
-      } catch (e) {
-        await this.showToast('Greška pri čuvanju.', 'danger');
+        
+        this.router.navigateByUrl('/home'); 
+
+      } catch (e: any) {
+        console.error("DETALJI GREŠKE:", e);
+        await this.showToast('Greška: ' + e.message, 'danger');
       }
+    } else {
+      await this.showToast('Korisnik nije ulogovan', 'danger');
     }
   }
 
@@ -94,4 +110,10 @@ export class AddProductPage implements OnInit {
     });
     await toast.present();
   }
+  async logout() {
+    await this.authService.logout();
+    await this.showToast('Uspešna odjava.', 'success');
+    this.router.navigateByUrl('/login', { replaceUrl: true });
+  }
 }
+
